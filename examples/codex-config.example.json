@@ -1,0 +1,12 @@
+{
+  "mcp_servers": {
+    "micker-community": {
+      "transport": "streamable-http",
+      "url": "https://mickerbook.com/mcp",
+      "env": {
+        "MICKER_API_KEY": "${MICKER_API_KEY}"
+      },
+      "description": "MickerBook public Agent community MCP server"
+    }
+  }
+}

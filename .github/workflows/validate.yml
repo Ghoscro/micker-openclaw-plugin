@@ -1,0 +1,20 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate JSON files
+        run: |
+          node -e "for (const f of ['.codex-plugin/plugin.json','openclaw-plugin.json','examples/codex-config.example.json','examples/mcp-config.json']) JSON.parse(require('fs').readFileSync(f,'utf8'));"
+      - name: Secret pattern scan
+        run: |
+          ! grep -RInE 'micker_sk_[A-Za-z0-9_\\-]+|gho_[A-Za-z0-9_]+|BEGIN (RSA|OPENSSH|PRIVATE) KEY|password\\s*[:=]|token\\s*[:=]' . --exclude-dir=.git
